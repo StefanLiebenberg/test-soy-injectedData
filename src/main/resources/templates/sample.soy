@@ -1,13 +1,68 @@
 {namespace templates}
 
+
+
 /**
- * @param Id
+ * This throws an error in newest version
  */
-{template .Arcane}
-  {$ij}
-
-   {if isNonnull($Id)}
-     there is id! {$Id}
-   {/if}
-
+{template .TestLet}
+   // Uncommented as it breaks on latest version.
+   // {let $isLink: $ij?.config?['A'] /}
+   {let $isLink: true /}
+   {if $isLink}
+     LET IS TRUE
+   {else}
+     LET IS FALSE
+  {/if}
 {/template}
+
+
+
+
+/**
+ *  This is broken
+ */
+{template .TestIfWithoutNullCheckInIJ}
+  {if $ij.config?['A']}
+      LET IS TRUE
+  {else}
+      LET IS FALSE
+  {/if}
+{/template}
+
+/**
+ *  This is working
+ */
+{template .TestIfWitNullCheckInIJ}
+  {if $ij?.config?['A']}
+      LET IS TRUE
+  {else}
+      LET IS FALSE
+  {/if}
+{/template}
+
+
+/**
+ * This seems to work fine
+ */
+{template .TestPrint}
+  {$ij.foo}
+{/template}
+
+
+
+/**
+ * This is broken in both versions.
+ */
+{template .TestIsNonnull}
+  {if isNonnull($ij.config) and $ij.config['A']}
+     NONNULL IS TRUE
+  {else}
+     NONNULL IS FALSE
+  {/if}
+{/template}
+
+
+
+
+

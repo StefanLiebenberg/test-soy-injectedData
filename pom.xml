@@ -12,9 +12,44 @@
         <dependency>
             <groupId>com.google.template</groupId>
             <artifactId>soy</artifactId>
-            <version>2015-04-10</version>
-            <!--<version>2016-01-12</version>-->
+            <version>${dep.soy}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <mainClass>example.Application</mainClass>
+                            <arguments>
+                                <argument>${dep.soy}.js</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>oldSoy</id>
+            <properties>
+                <dep.soy>2015-04-10</dep.soy>
+            </properties>
+        </profile>
+        <profile>
+            <id>newSoy</id>
+            <properties>
+                <dep.soy>2016-01-12</dep.soy>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

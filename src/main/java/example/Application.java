@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Application {
 
+
     public static void main(String[] args) throws IOException {
 
         SoyFileSet.Builder builder = SoyFileSet.builder();
@@ -21,7 +22,7 @@ public class Application {
         builder.add(Application.class.getResource("/templates/sample.soy"));
         final SoyFileSet fileSet = builder.build();
 
-        File output = new File("output.js");
+        File output = new File(args[0]);
         SoyJsSrcOptions options = new SoyJsSrcOptions();
 //        options.setIsUsingIjData(true);
 //        options.setCodeStyle(SoyJsSrcOptions.CodeStyle.CONCAT);
@@ -35,6 +36,5 @@ public class Application {
             writer.write(string);
         }
         writer.close();
-
     }
 }
