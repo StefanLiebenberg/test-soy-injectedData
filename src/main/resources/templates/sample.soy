@@ -7,13 +7,23 @@
  */
 {template .TestLet}
    // Uncommented as it breaks on latest version.
-   // {let $isLink: $ij?.config?['A'] /}
-   {let $isLink: true /}
+//    {let $isLink: $ij?.config?['A'] /}
+    {let $isLink: $ij.config?['A'] /}
    {if $isLink}
      LET IS TRUE
    {else}
      LET IS FALSE
   {/if}
+{/template}
+
+
+/**
+ * No error.
+ */
+{template .TestCall}
+  {call .Util}
+     {param Value: $ij.config['A'] /}
+  {/call}
 {/template}
 
 
@@ -33,7 +43,7 @@
 /**
  *  This is working
  */
-{template .TestIfWitNullCheckInIJ}
+{template .TestIfWithNullCheckInIJ}
   {if $ij?.config?['A']}
       LET IS TRUE
   {else}
@@ -46,7 +56,7 @@
  * This seems to work fine
  */
 {template .TestPrint}
-  {$ij.foo}
+  {$ij.config?['A']}
 {/template}
 
 
@@ -63,6 +73,13 @@
 {/template}
 
 
+/**
+ * utility template
+ * @param Value
+ */
+{template .Util}
+  {if $Value}true{else}false{/if}
+{/template}
 
 
 

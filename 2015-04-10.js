@@ -7,11 +7,13 @@
  */
 
 goog.provide('templates');
-goog.provide('templates.TestIfWitNullCheckInIJ');
+goog.provide('templates.TestCall');
+goog.provide('templates.TestIfWithNullCheckInIJ');
 goog.provide('templates.TestIfWithoutNullCheckInIJ');
 goog.provide('templates.TestIsNonnull');
 goog.provide('templates.TestLet');
 goog.provide('templates.TestPrint');
+goog.provide('templates.Util');
 
 goog.require('soy');
 goog.require('soydata');
@@ -19,12 +21,20 @@ goog.require('soydata');
 
 templates.TestLet = function(opt_data, opt_ignored, opt_ijData) {
   var output = '';
-  var isLink__soy3 = true;
+  var isLink__soy3 = (opt_ijData.config == null) ? null : opt_ijData.config['A'];
   output += (isLink__soy3) ? 'LET IS TRUE' : 'LET IS FALSE';
   return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
 };
 if (goog.DEBUG) {
   templates.TestLet.soyTemplateName = 'templates.TestLet';
+}
+
+
+templates.TestCall = function(opt_data, opt_ignored, opt_ijData) {
+  return soydata.VERY_UNSAFE.ordainSanitizedHtml(templates.Util({Value: opt_ijData.config['A']}, null, opt_ijData));
+};
+if (goog.DEBUG) {
+  templates.TestCall.soyTemplateName = 'templates.TestCall';
 }
 
 
@@ -36,16 +46,16 @@ if (goog.DEBUG) {
 }
 
 
-templates.TestIfWitNullCheckInIJ = function(opt_data, opt_ignored, opt_ijData) {
+templates.TestIfWithNullCheckInIJ = function(opt_data, opt_ignored, opt_ijData) {
   return soydata.VERY_UNSAFE.ordainSanitizedHtml(((opt_ijData == null) ? null : (opt_ijData.config == null) ? null : opt_ijData.config['A']) ? 'LET IS TRUE' : 'LET IS FALSE');
 };
 if (goog.DEBUG) {
-  templates.TestIfWitNullCheckInIJ.soyTemplateName = 'templates.TestIfWitNullCheckInIJ';
+  templates.TestIfWithNullCheckInIJ.soyTemplateName = 'templates.TestIfWithNullCheckInIJ';
 }
 
 
 templates.TestPrint = function(opt_data, opt_ignored, opt_ijData) {
-  return soydata.VERY_UNSAFE.ordainSanitizedHtml(soy.$$escapeHtml(opt_ijData.foo));
+  return soydata.VERY_UNSAFE.ordainSanitizedHtml(soy.$$escapeHtml((opt_ijData.config == null) ? null : opt_ijData.config['A']));
 };
 if (goog.DEBUG) {
   templates.TestPrint.soyTemplateName = 'templates.TestPrint';
@@ -57,4 +67,12 @@ templates.TestIsNonnull = function(opt_data, opt_ignored, opt_ijData) {
 };
 if (goog.DEBUG) {
   templates.TestIsNonnull.soyTemplateName = 'templates.TestIsNonnull';
+}
+
+
+templates.Util = function(opt_data, opt_ignored, opt_ijData) {
+  return soydata.VERY_UNSAFE.ordainSanitizedHtml((opt_data.Value) ? 'true' : 'false');
+};
+if (goog.DEBUG) {
+  templates.Util.soyTemplateName = 'templates.Util';
 }
