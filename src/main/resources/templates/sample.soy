@@ -65,10 +65,12 @@
  * This is broken in both versions.
  */
 {template .TestIsNonnull}
-  {if isNonnull($ij.config) and $ij.config['A']}
+  {if isNonnull($ij)}
+    {if isNonnull($ij.config) and $ij.config['A']}
      NONNULL IS TRUE
-  {else}
+    {else}
      NONNULL IS FALSE
+    {/if}
   {/if}
 {/template}
 

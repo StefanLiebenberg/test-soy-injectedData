@@ -63,7 +63,7 @@ if (goog.DEBUG) {
 
 
 templates.TestIsNonnull = function(opt_data, opt_ignored, opt_ijData) {
-  return soydata.VERY_UNSAFE.ordainSanitizedHtml((opt_ijData.config != null && opt_ijData.config['A']) ? 'NONNULL IS TRUE' : 'NONNULL IS FALSE');
+  return soydata.VERY_UNSAFE.ordainSanitizedHtml((isNonnull(opt_data.ij)) ? (opt_ijData.config != null && opt_ijData.config['A']) ? 'NONNULL IS TRUE' : 'NONNULL IS FALSE' : '');
 };
 if (goog.DEBUG) {
   templates.TestIsNonnull.soyTemplateName = 'templates.TestIsNonnull';
